@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Padelito Configuration</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .container {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            padding: 40px;
+            max-width: 700px;
+            width: 100%;
+        }
+        
+        h1 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 28px;
+        }
+        
+        .file-path {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 30px;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            color: #555;
+            font-weight: 600;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+        
+        input[type="text"] {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            transition: border-color 0.3s;
+        }
+        
+        input[type="text"]:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        
+        .button-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 30px;
+        }
+        
+        button {
+            flex: 1;
+            padding: 14px 24px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .save-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        
+        .save-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+        
+        .reload-btn {
+            background: #f5f5f5;
+            color: #555;
+        }
+        
+        .reload-btn:hover {
+            background: #e0e0e0;
+        }
+        
+        .message {
+            margin-top: 20px;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 14px;
+            display: none;
+        }
+        
+        .message.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .message.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        
+        .message.show {
+            display: block;
+        }
+        
+        .hint {
+            font-size: 12px;
+            color: #999;
+            margin-top: 4px;
+        }
+        
+        .section-divider {
+            border-top: 2px solid #e0e0e0;
+            margin: 30px 0;
+        }
+        
+        .section-title {
+            color: #333;
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Padelito Configuration</h1>
+        <div class="file-path">/home/pi/padelito/padelito.data</div>
+        
+        <form id="configForm">
+            <div class="form-group">
+                <label for="TOKEN_ID">Token ID</label>
+                <input type="text" id="TOKEN_ID" name="TOKEN_ID" value="{{ config.TOKEN_ID }}" placeholder="093ee865-e63a-41fc-90ef-c9917e97ec4c" />
+            </div>
+            
+            <div class="form-group">
+                <label for="CLUB_ID">Club ID</label>
+                <input type="text" id="CLUB_ID" name="CLUB_ID" value="{{ config.CLUB_ID }}" placeholder="1633" />
+            </div>
+            
+            <div class="form-group">
+                <label for="DAYS_TO_ADD">Days to Add</label>
+                <input type="text" id="DAYS_TO_ADD" name="DAYS_TO_ADD" value="{{ config.DAYS_TO_ADD }}" placeholder="4" />
+            </div>
+            
+            <div class="form-group">
+                <label for="COURT_IDS">Court IDs</label>
+                <input type="text" id="COURT_IDS" name="COURT_IDS" value="{{ config.COURT_IDS }}" placeholder="714,2288,737,7634,373,14" />
+                <div class="hint">Comma-separated list of court IDs</div>
+            </div>
+            
+            <div class="form-group">
+                <label for="HOURS">Hours</label>
+                <input type="text" id="HOURS" name="HOURS" value="{{ config.HOURS }}" placeholder="16:30" />
+                <div class="hint">Format: HH:MM</div>
+            </div>
+            
+            <div class="form-group">
+                <label for="BOT_ID">Bot ID</label>
+                <input type="text" id="BOT_ID" name="BOT_ID" value="{{ config.BOT_ID }}" placeholder="7908634542:AAFlgMeauKdjAchi8_TSfXYjs1F6y9mnXEo" />
+            </div>
+            
+            <div class="form-group">
+                <label for="CHAT_ID">Chat ID</label>
+                <input type="text" id="CHAT_ID" name="CHAT_ID" value="{{ config.CHAT_ID }}" placeholder="1890425861" />
+            </div>
+            
+            <div class="button-group">
+                <button type="submit" class="save-btn">Save Configuration</button>
+            </div>
+        </form>
+        
+        <div class="section-divider"></div>
+        
+        <div class="section-title">Cron Job Configuration</div>
+        
+        <form id="cronForm">
+            <div class="form-group">
+                <label for="cron_job">Cron Job</label>
+                <input type="text" id="cron_job" name="cron_job" value="{{ cron_job }}" placeholder="30 19 * * 0,1,4,5 /home/pi/padelito/bookcourt.sh" />
+                <div class="hint">Format: minute hour day month weekday command</div>
+            </div>
+            
+            <button type="submit" class="save-btn" style="width: 100%;">Save Cron Job & Restart Service</button>
+        </form>
+        
+        <div id="message" class="message"></div>
+    </div>
+
+    <script>
+        const form = document.getElementById('configForm');
+        const cronForm = document.getElementById('cronForm');
+        const messageDiv = document.getElementById('message');
+        
+        function showMessage(text, isSuccess) {
+            messageDiv.textContent = text;
+            messageDiv.className = 'message ' + (isSuccess ? 'success' : 'error') + ' show';
+            
+            setTimeout(() => {
+                messageDiv.classList.remove('show');
+            }, 3000);
+        }
+        
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const formData = new FormData(form);
+            
+            try {
+                const response = await fetch('/update', {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                const data = await response.json();
+                showMessage(data.message, data.success);
+                
+            } catch (error) {
+                showMessage('Error: Could not save configuration', false);
+            }
+        });
+        
+        cronForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const formData = new FormData(cronForm);
+            
+            try {
+                const response = await fetch('/update-cron', {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                const data = await response.json();
+                showMessage(data.message, data.success);
+                
+            } catch (error) {
+                showMessage('Error: Could not update cron job', false);
+            }
+        });
+    </script>
+</body>
+</html>
