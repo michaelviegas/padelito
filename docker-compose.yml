@@ -1,0 +1,8 @@
+services:
+  padelito:
+    build: .
+    ports:
+      - "7070:80"
+    volumes:
+      - ./padelito.data:/app/padelito.data
+    restart: unless-stopped

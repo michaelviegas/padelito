@@ -51,6 +51,7 @@
 #   373: campo 6
 #   2288: campo 7
 #   7634: campo 8
+#   9678: campo 9
 
 # Alsakia
 # clubId = 47410;
@@ -60,7 +61,7 @@
 #   6355: campo 3
 
 # Configuration file path
-CONFIG_FILE="/home/pi/padelito/padelito.data"
+CONFIG_FILE="${PADELITO_DATA:-/app/padelito.data}"
 
 # Check if configuration file exists
 if [ ! -f "$CONFIG_FILE" ]; then

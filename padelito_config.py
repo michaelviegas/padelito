@@ -4,7 +4,7 @@ import os
 import re
 
 app = Flask(__name__)
-DATA_FILE = '/home/pi/padelito/padelito.data'
+DATA_FILE = os.environ.get('PADELITO_DATA', '/app/padelito.data')
 
 def read_config():
     """Read configuration from padelito.data file"""
@@ -96,10 +96,10 @@ def write_cron(cron_line):
                               timeout=5)
         
         if result.returncode == 0:
-            # Restart cron service
-            subprocess.run(['sudo', 'systemctl', 'restart', 'cron'], 
+            # Reload cron daemon to pick up changes
+            subprocess.run(['service', 'cron', 'reload'],
                          capture_output=True, timeout=10)
-            return True, 'Cron job updated and cron service restarted!'
+            return True, 'Cron job updated and cron service reloaded!'
         else:
             return False, f'Error updating cron: {result.stderr}'
             
@@ -141,10 +141,10 @@ def restart_cron():
     """Restart cron service"""
     try:
         import subprocess
-        result = subprocess.run(['sudo', 'systemctl', 'restart', 'cron'], 
+        result = subprocess.run(['service', 'cron', 'reload'],
                               capture_output=True, text=True, timeout=10)
         if result.returncode == 0:
-            return jsonify({'success': True, 'message': 'Cron service restarted successfully!'})
+            return jsonify({'success': True, 'message': 'Cron service reloaded successfully!'})
         else:
             return jsonify({'success': False, 'message': f'Error: {result.stderr}'})
     except Exception as e:

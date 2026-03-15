@@ -152,44 +152,44 @@
 <body>
     <div class="container">
         <h1>Padelito Configuration</h1>
-        <div class="file-path">/home/pi/padelito/padelito.data</div>
+        <div class="file-path">/app/padelito.data</div>
         
         <form id="configForm">
             <div class="form-group">
                 <label for="TOKEN_ID">Token ID</label>
-                <input type="text" id="TOKEN_ID" name="TOKEN_ID" value="{{ config.TOKEN_ID }}" placeholder="093ee865-e63a-41fc-90ef-c9917e97ec4c" />
+                <input type="text" id="TOKEN_ID" name="TOKEN_ID" value="{{ config.TOKEN_ID }}" />
             </div>
             
             <div class="form-group">
                 <label for="CLUB_ID">Club ID</label>
-                <input type="text" id="CLUB_ID" name="CLUB_ID" value="{{ config.CLUB_ID }}" placeholder="1633" />
+                <input type="text" id="CLUB_ID" name="CLUB_ID" value="{{ config.CLUB_ID }}" />
             </div>
             
             <div class="form-group">
                 <label for="DAYS_TO_ADD">Days to Add</label>
-                <input type="text" id="DAYS_TO_ADD" name="DAYS_TO_ADD" value="{{ config.DAYS_TO_ADD }}" placeholder="4" />
+                <input type="text" id="DAYS_TO_ADD" name="DAYS_TO_ADD" value="{{ config.DAYS_TO_ADD }}" />
             </div>
             
             <div class="form-group">
                 <label for="COURT_IDS">Court IDs</label>
-                <input type="text" id="COURT_IDS" name="COURT_IDS" value="{{ config.COURT_IDS }}" placeholder="714,2288,737,7634,373,14" />
+                <input type="text" id="COURT_IDS" name="COURT_IDS" value="{{ config.COURT_IDS }}" />
                 <div class="hint">Comma-separated list of court IDs</div>
             </div>
             
             <div class="form-group">
                 <label for="HOURS">Hours</label>
-                <input type="text" id="HOURS" name="HOURS" value="{{ config.HOURS }}" placeholder="16:30" />
+                <input type="text" id="HOURS" name="HOURS" value="{{ config.HOURS }}" />
                 <div class="hint">Format: HH:MM</div>
             </div>
             
             <div class="form-group">
                 <label for="BOT_ID">Bot ID</label>
-                <input type="text" id="BOT_ID" name="BOT_ID" value="{{ config.BOT_ID }}" placeholder="7908634542:AAFlgMeauKdjAchi8_TSfXYjs1F6y9mnXEo" />
+                <input type="text" id="BOT_ID" name="BOT_ID" value="{{ config.BOT_ID }}" />
             </div>
             
             <div class="form-group">
                 <label for="CHAT_ID">Chat ID</label>
-                <input type="text" id="CHAT_ID" name="CHAT_ID" value="{{ config.CHAT_ID }}" placeholder="1890425861" />
+                <input type="text" id="CHAT_ID" name="CHAT_ID" value="{{ config.CHAT_ID }}" />
             </div>
             
             <div class="button-group">
@@ -204,7 +204,7 @@
         <form id="cronForm">
             <div class="form-group">
                 <label for="cron_job">Cron Job</label>
-                <input type="text" id="cron_job" name="cron_job" value="{{ cron_job }}" placeholder="30 19 * * 0,1,4,5 /home/pi/padelito/bookcourt.sh" />
+                <input type="text" id="cron_job" name="cron_job" value="{{ cron_job }}" placeholder="30 19 * * 0,4,5 /app/bookcourt.sh" />
                 <div class="hint">Format: minute hour day month weekday command</div>
             </div>
             

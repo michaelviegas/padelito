@@ -1,0 +1,7 @@
+padelito.data
+__pycache__/
+*.pyc
+*.pyo
+.git/
+.gitignore
+README.md

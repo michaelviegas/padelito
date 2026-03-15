@@ -1,25 +1,41 @@
-# Padelito – Raspberry Pi Local Web UI (Minimal Setup)
+# Padelito – Raspberry Pi Local Web UI
 
 Small Flask web UI to configure `padelito.data` and manage cron jobs on a Raspberry Pi.
-This setup is intentionally minimal: **no NGINX**, no reverse proxy. Gunicorn binds directly to port 80.
 Designed for **LAN-only** usage.
 
 Access URLs:
-- http://{IP address}/
-- http://{DNS name}.local/
+- `http://{IP address}/` (bare-metal)
+- `http://{IP address}:7070/` (Docker)
+- `http://{DNS name}.local/`
 
 ---
 
 ## Requirements
 
-- Raspberry Pi Zero 2
+- Raspberry Pi Zero 2 (or any Linux host)
 - Raspberry Pi OS (Lite or Desktop)
-- Python 3
-- Local network (LAN only)
+- Python 3 **or** Docker
 
 ---
 
-## Installation
+## Folder structure
+
+```
+padelito/
+├── bookcourt.sh
+├── docker-compose.yml
+├── Dockerfile
+├── entrypoint.sh
+├── padelito_config.py
+├── padelito.data
+├── requirements.txt
+└── templates/
+    └── index.html
+```
+
+---
+
+## Option A – Docker (recommended)
 
 ### 1. Clone the repo
 
@@ -29,49 +45,50 @@ git clone https://github.com/michaelviegas/padelito.git
 cd padelito
 ```
 
+### 2. Start the container
+
+```bash
+docker compose up -d
+```
+
+The app is available at `http://{IP address}:7070/`.
+
+Configuration is persisted in a named Docker volume (`padelito_data`).
+
+### 3. Stop / restart
+
+```bash
+docker compose down
+docker compose restart
+```
+
+### 4. View logs
+
+```bash
+docker compose logs -f
+```
+
 ---
+
+## Option B – Bare-metal (systemd)
+
+### 1. Clone the repo
+
+```bash
+cd ~
+git clone https://github.com/michaelviegas/padelito.git
+cd padelito
+```
 
 ### 2. Install dependencies
 
 ```bash
 sudo apt update
-sudo apt install -y python3-pip
-pip3 install flask gunicorn
+sudo apt install -y python3-pip cron
+pip3 install -r requirements.txt
 ```
 
----
-
-### 3. Folder structure
-
-Make sure your project looks like this:
-
-```
-padelito/
-├── bookcourt.sh
-├── padelito_config.py
-├── padelito.data
-└── templates/
-    └── index.html
-```
-
----
-
-### 4. Update Flask dev port (do NOT use 80 in dev)
-
-Edit `padelito_config.py`:
-
-```python
-if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=8000, debug=False)
-```
-
-> Port 80 will be handled by Gunicorn via systemd.
-
----
-
-## Run as a Service (Auto-start on boot)
-
-### 5. Create systemd service (bind directly to port 80)
+### 3. Create systemd service
 
 ```bash
 sudo nano /etc/systemd/system/padelito.service
@@ -108,45 +125,7 @@ Check status:
 sudo systemctl status padelito
 ```
 
----
-
-## Allow Cron Restart (No Password Prompt)
-
-The web UI restarts cron using sudo.
-Allow this single command without password:
-
-```bash
-sudo visudo
-```
-
-Add:
-
-```
-pi ALL=NOPASSWD: /bin/systemctl restart cron
-```
-
----
-
-## Access
-
-Open in your browser:
-
-```
-http://{IP address}/
-http://{DNS name}.local/
-```
-
-Find the Pi IP if needed:
-
-```bash
-hostname -I
-```
-
----
-
-## Logs & Debugging
-
-Service logs:
+### 4. View logs
 
 ```bash
 journalctl -u padelito -f
@@ -154,19 +133,10 @@ journalctl -u padelito -f
 
 ---
 
-## Reboot Test
-
-```bash
-sudo reboot
-```
-
-After reboot, verify the URLs above load.
-
----
-
 ## Notes
 
-- LAN-only and intentionally minimal.
-- No authentication is enabled.
+- LAN-only and intentionally minimal. No authentication is enabled.
 - Do not expose this service to the public internet.
+- Docker: cron runs inside the container — no host sudoers changes needed.
+- Bare-metal: cron is managed by the OS; the app calls `service cron reload` directly.
 - Low resource usage (1 Gunicorn worker).
