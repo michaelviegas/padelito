@@ -1,4 +1,5 @@
 #!/bin/bash
+PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 
 # TieSports API Request Script with Retry Logic
 # Reads configuration from /home/pi/padelito.data
@@ -126,7 +127,7 @@ get_available_courts() {
         -H "Accept-Language: en-GB,en;q=0.9" \
         -H "Connection: keep-alive" \
         -H "Accept-Encoding: gzip, deflate, br" \
-        -H "User-Agent: TiePlayer/322 CFNetwork/3860.300.31 Darwin/25.2.0" \
+        -H "User-Agent: TiePlayer/339 CFNetwork/3860.400.51 Darwin/25.3.0" \
         --compressed)
 
     http_code=$(echo "$response" | tail -n1)
@@ -171,7 +172,7 @@ make_request() {
         -H "Accept-Language: en-GB,en;q=0.9" \
         -H "Connection: keep-alive" \
         -H "Accept-Encoding: gzip, deflate, br" \
-        -H "User-Agent: TiePlayer/322 CFNetwork/3860.300.31 Darwin/25.2.0" \
+        -H "User-Agent: TiePlayer/339 CFNetwork/3860.400.51 Darwin/25.3.0" \
         --compressed)
 
     # Split response body and status code
@@ -242,7 +243,7 @@ for attempt in $(seq 1 $MAX_ATTEMPTS); do
                             -H "Accept-Language: en-GB,en;q=0.9" \
                             -H "Connection: keep-alive" \
                             -H "Accept-Encoding: gzip, deflate, br" \
-                            -H "User-Agent: TiePlayer/322 CFNetwork/3860.300.31 Darwin/25.2.0" \
+                            -H "User-Agent: TiePlayer/339 CFNetwork/3860.400.51 Darwin/25.3.0" \
                             --compressed)
 
                         # Extract the share message from match details
