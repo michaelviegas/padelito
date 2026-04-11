@@ -5,4 +5,7 @@ services:
       - "7070:80"
     volumes:
       - ./padelito.data:/app/padelito.data
+      - /etc/localtime:/etc/localtime:ro
+    environment:
+      - TZ=Europe/Lisbon
     restart: unless-stopped
